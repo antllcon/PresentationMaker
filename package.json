@@ -10,5 +10,8 @@
   },
   "author": "Gluharev Stepan",
   "license": "ISC",
-  "homepage": "https://github.com/antllcon/PresentationMaker#readme"
+  "homepage": "https://github.com/antllcon/PresentationMaker#readme",
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  }
 }
