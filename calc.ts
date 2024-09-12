@@ -1,5 +1,5 @@
 function validateString(input: string): boolean {
-    const regex = /[-?\d+*/()]/g;
+    const regex = /-?\d+|[-+*/()]/g;
     return regex.test(input);
 
 }
