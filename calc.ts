@@ -1,4 +1,3 @@
-
 function validateString(input: string): boolean {
     if (validateChars(input) && validateBrackets(input)) {
         return true;
@@ -48,47 +47,55 @@ function tokenizeString(input: string): Array<string> {
 }
 
 // вычисляем значение выражения, проверяем корректность
-function calc(input: string): number {
-    if (validateString(input)) {
-        let arr = tokenizeString(input);
-        let stack: Array<number> = [];
-        while (arr.length !== 0) {
-            let token: string = arr.pop();
-            if (!isNaN(Number(token))) {
-                stack.push(Number(token));
-            } else {
-                if (stack.length < 2) {
-                    console.log("Недостаточно чисел");
-                    break;
-                }
-                let a = stack.pop();
-                let b = stack.pop();
+function calc(input: string): number | string {
+    if (!validateString(input)) {
+        return "Ошибка: некорректное выражение или символы";
+    }
+    let arr = tokenizeString(input);
+    let stack: Array<number> = [];
+    while (arr.length !== 0) {
+        let token: string = arr.pop();
+        if (!isNaN(Number(token))) {
+            stack.push(Number(token));
+        } else {
+            if (stack.length < 2) {
+                return "Ошибка: недостаточно чисел для выполнения операции";
+            }
+            let a = stack.pop();
+            let b = stack.pop();
 
-                switch (token) {
-                    case "+": stack.push(a + b); break;
-                    case "-": stack.push(a - b); break;
-                    case "*": stack.push(a * b); break;
-                    case "/":
-                        if (b === 0) {
-                            console.log("Деление на ноль невозможно");
-                            break;
-                        } else {stack.push(a / b); break;}
-                }
+            switch (token) {
+                case "+":
+                    stack.push(a + b);
+                    break;
+                case "-":
+                    stack.push(a - b);
+                    break;
+                case "*":
+                    stack.push(a * b);
+                    break;
+                case "/":
+                    if (b === 0) {
+                        return "Ошибка: деление на ноль";
+                    } else {
+                        stack.push(a / b);
+                        break;
+                    }
             }
         }
-        if (stack.length !== 1) {
-            console.log("Некорректное выражение");
-            return 0;
-        } else return stack.pop()!;
-    } else {
-        return 0;
     }
+    if (stack.length !== 1) {
+        return "Ошибка: некорректное выражение";
+    } else return stack.pop()!;
 }
 
 console.log("1. 1 - 2 =", calc("- 1 2")); // -1
-console.log("2. 3 + 4 =", calc("+ 3 4")); // 7
+console.log("2. 3 + 4 =", calc("+ -3 4")); // 7
 console.log("3. 5 / 2 =", calc("/ 5 2")); // 2.5
 console.log("4. 2 * 3 =", calc("* 2 3")); // 6
 
-console.log("5. ", calc("+ 3 4"));
+console.log("5.", calc(""));
+console.log("6.", calc("apple"));
+console.log("7.", calc("5 - 5"));
+console.log("8.", calc("/ 10 0"));
 
