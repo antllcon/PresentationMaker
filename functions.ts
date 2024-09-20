@@ -87,3 +87,17 @@ function changeSlideBackground(slide: Slide, newBackground: Solid | Image | Grad
         background: newBackground
     };
 }
+
+export {
+    changePresentationTitle,
+    changeTextSize,
+    addSlide,
+    removeSlide,
+    moveSlide,
+    addTextToSlide,
+    removeObjectFromSlide,
+    changeObjectPosition,
+    changeTextContent,
+    changeTextFontFamily,
+    changeSlideBackground
+}

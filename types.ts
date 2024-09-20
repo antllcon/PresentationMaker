@@ -95,5 +95,7 @@ export {
     Solid,
     Gradient,
     Image,
-    ImageObject
+    ImageObject,
+    FigureObject,
+    SelectionSlideObjects
 }

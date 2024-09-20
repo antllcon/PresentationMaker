@@ -7,7 +7,7 @@ function validateString(input: string): boolean {
 // ищем корректные символы
 function validateChars(input: string): boolean {
     const validChars = " -?0123456789+*/()";
-    for (let char of input) {
+    for (const char of input) {
         if (validChars.indexOf(char) === -1) {
             console.log("Некорректный символ в выражении");
             return false;
@@ -21,7 +21,7 @@ function validateBrackets(input: string): boolean {
     let staples: number = 0;
     const startBracket: string = "(";
     const endBracket: string = ")";
-    for (let char of input) {
+    for (const char of input) {
         if (staples < 0) {
             console.log("Неправильно поставленные скобки");
             break;
@@ -51,18 +51,18 @@ function calc(input: string): number | string {
     if (!validateString(input)) {
         return "Ошибка: некорректное выражение или символы";
     }
-    let arr = tokenizeString(input);
-    let stack: Array<number> = [];
+    const arr = tokenizeString(input);
+    const stack: Array<number> = [];
     while (arr.length !== 0) {
-        let token: string = arr.pop();
+        const token: string = arr.pop();
         if (!isNaN(Number(token))) {
             stack.push(Number(token));
         } else {
             if (stack.length < 2) {
                 return "Ошибка: недостаточно чисел для выполнения операции";
             }
-            let a = stack.pop();
-            let b = stack.pop();
+            const a = stack.pop();
+            const b = stack.pop();
 
             switch (token) {
                 case "+":
