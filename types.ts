@@ -1,65 +1,99 @@
 // Презентация
-export type Presentation = {
+type Presentation = {
     title: string;
     slides: Slide[];
-    currentSlideId: number;
-    commandHistory: CommandHistory[];
-};
-
-// Коллекция слайдов
-export type SlideCollection = Slide[];
+    selectedSlidesId: string[];
+}
 
 // Слайд
-export type Slide = {
-    id: number;
+type Slide = {
+    id: string;
     objects: SlideObject[];
-    background: Background;
-};
+    background: Solid | Image | Gradient;
+}
 
-// Объекты на слайде (текст, фигуры, изображения)
-export type SlideObject = {
-    id: number;
-    type: textObject | figureObject | imageObject;
+// Объекты на слайде
+type SlideObject = {
+    id: string;
     position: { x: number; y: number };
     size: { width: number; height: number };
-};
+}
 
 // Текстовый объект
-export type textObject = {
-    content: string;
+type TextObject = SlideObject & {
+    value: string;
     fontSize: string;
     fontFamily: string;
-};
-
-// Объект фигуры (примерный вариант)
-export type figureObject = {
-    shape: 'rectangle' | 'circle' | 'triangle';
-    color: string;
-    // borderColor: string;
-    // borderWidth: number;
-    // fillColor: string;
-};
+}
 
 // Объект изображения
-export type imageObject = {
+type ImageObject = SlideObject & {
     src: string;
-    altText?: string;
-};
+}
 
-// Фон слайда
-export type Background = {
-    type: 'color' | 'image' | 'gradient';
-    value: string;  // Цвет или URL изображения
-};
+// Объект фигуры
+type FigureObject = SlideObject & {
+    shape: Rectangle | Circle | Triangle | ArbitraryLine;
+    color: string;
+    borderColor: string;
+    borderWidth: number;
+}
 
-// История команд для отката
-export type CommandHistory = {
-    command: string;
-    value: string;
-    creationTime: Date;
-};
+// Выделение объектов на слайде
+type SelectionSlideObjects = {
+    selectedObjects: string[]; // массив идентификаторов выбранных объектов
+}
 
-// Управление выделенными объектами на слайде
-export type SelectionSlideObjects = {
-    selectedObjects: SlideObject[];
-};
+// Заливка цветом фон
+type Solid = {
+    type: "solid";
+    color: string;
+}
+
+// Изображение фон
+type Image = {
+    type: "image";
+    src: string;
+}
+
+// Градиентный фон
+type Gradient = {
+    type: "gradient";
+    colors: { color: string }[];
+    angle: number;
+}
+
+// Прямоугольник
+type Rectangle = {
+    type: "rectangle";
+    width: number;
+    height: number;
+}
+
+// Круг
+type Circle = {
+    type: "circle";
+    radius: number;
+}
+
+// Треугольник
+type Triangle = {
+    type: "triangle";
+}
+
+// Произвольная линия
+type ArbitraryLine = {
+    type: "arbitraryLine";
+    points: { x: number; y: number }[];
+}
+
+export {
+    Presentation,
+    Slide,
+    SlideObject,
+    TextObject,
+    Solid,
+    Gradient,
+    Image,
+    ImageObject
+}

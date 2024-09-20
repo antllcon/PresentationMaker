@@ -90,7 +90,7 @@ function calc(input: string): number | string {
 }
 
 console.log("1. 1 - 2 =", calc("- 1 2")); // -1
-console.log("2. 3 + 4 =", calc("+ -3 4")); // 7
+console.log("2. 3 + 4 =", calc("+ -3 4")); // 1
 console.log("3. 5 / 2 =", calc("/ 5 2")); // 2.5
 console.log("4. 2 * 3 =", calc("* 2 3")); // 6
 
@@ -98,4 +98,5 @@ console.log("5.", calc(""));
 console.log("6.", calc("apple"));
 console.log("7.", calc("5 - 5"));
 console.log("8.", calc("/ 10 0"));
+console.log("9.", calc("+ (- 5 9) 2"));
 
