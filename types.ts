@@ -2,7 +2,6 @@
 type Presentation = {
     title: string;
     slides: Slide[];
-    selectedSlidesId: string[];
 }
 
 // Слайд
@@ -15,8 +14,16 @@ type Slide = {
 // Объекты на слайде
 type SlideObject = {
     id: string;
-    position: { x: number; y: number };
-    size: { width: number; height: number };
+    position: {
+        x: number;
+        y: number;
+    };
+    size: {
+        width: number;
+        height: number;
+    };
+    borderColor: string;
+    borderWidth: number;
 }
 
 // Текстовый объект
@@ -34,14 +41,7 @@ type ImageObject = SlideObject & {
 // Объект фигуры
 type FigureObject = SlideObject & {
     shape: Rectangle | Circle | Triangle | ArbitraryLine;
-    color: string;
-    borderColor: string;
-    borderWidth: number;
-}
-
-// Выделение объектов на слайде
-type SelectionSlideObjects = {
-    selectedObjects: string[]; // массив идентификаторов выбранных объектов
+    fillColor: string;
 }
 
 // Заливка цветом фон
@@ -87,6 +87,16 @@ type ArbitraryLine = {
     points: { x: number; y: number }[];
 }
 
+// Выделенные слайды
+type SelectionSlidesId = {
+    id: string[];
+}
+
+// Выделение объектов на слайде
+type SelectionSlideObjectsId = {
+    selectedObjectsId: string[];
+}
+
 export {
     Presentation,
     Slide,
@@ -97,5 +107,6 @@ export {
     Image,
     ImageObject,
     FigureObject,
-    SelectionSlideObjects
+    SelectionSlidesId,
+    SelectionSlideObjectsId
 }

@@ -20,32 +20,58 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.changePresentationTitle = changePresentationTitle;
+exports.changeTextSize = changeTextSize;
+exports.addSlide = addSlide;
 exports.removeSlide = removeSlide;
 exports.moveSlide = moveSlide;
-exports.addSlideObject = addSlideObject;
-exports.removeSlideObject = removeSlideObject;
-function changePresentationTitle(presentation, newTitle) {
-    return __assign(__assign({}, presentation), { title: newTitle });
+exports.addTextToSlide = addTextToSlide;
+exports.removeObjectFromSlide = removeObjectFromSlide;
+exports.changeObjectPosition = changeObjectPosition;
+exports.changeTextContent = changeTextContent;
+exports.changeTextFontFamily = changeTextFontFamily;
+exports.changeSlideBackground = changeSlideBackground;
+function changePresentationTitle(presentation, title) {
+    return __assign(__assign({}, presentation), { title: title });
 }
 function addSlide(presentation, newSlide) {
-    var UpdatedSlides = __spreadArray(__spreadArray([], presentation.slides, true), [newSlide], false);
-    return __assign(__assign({}, presentation), { slides: UpdatedSlides });
+    return __assign(__assign({}, presentation), { slides: __spreadArray(__spreadArray([], presentation.slides, true), [newSlide], false) });
 }
 function removeSlide(presentation, slideId) {
-    var updatedSlides = presentation.slides.filter(function (slide) { return slide.id !== slideId; });
-    return __assign(__assign({}, presentation), { slides: updatedSlides });
+    return __assign(__assign({}, presentation), { slides: presentation.slides.filter(function (slide) { return slide.id !== slideId; }) });
 }
 function moveSlide(presentation, fromIndex, toIndex) {
-    var updatedSlides = __spreadArray([], presentation.slides, true);
-    var movedSlide = updatedSlides.splice(fromIndex, 1)[0];
-    updatedSlides.splice(toIndex, 0, movedSlide);
-    return __assign(__assign({}, presentation), { slides: updatedSlides });
+    var slides = __spreadArray([], presentation.slides, true);
+    var movedSlide = slides.splice(fromIndex, 1)[0];
+    slides.splice(toIndex, 0, movedSlide);
+    return __assign(__assign({}, presentation), { slides: slides });
 }
-function addSlideObject(slide, newObject) {
-    var updatedObjects = __spreadArray(__spreadArray([], slide.objects, true), [newObject], false);
-    return __assign(__assign({}, slide), { objects: updatedObjects });
+function addTextToSlide(slide, newText) {
+    return __assign(__assign({}, slide), { objects: __spreadArray(__spreadArray([], slide.objects, true), [newText], false) });
 }
-function removeSlideObject(slide, objectId) {
-    var updatedObjects = slide.objects.filter(function (object) { return object.id !== objectId; });
-    return __assign(__assign({}, slide), { objects: updatedObjects });
+function removeObjectFromSlide(slide, objectId) {
+    return __assign(__assign({}, slide), { objects: slide.objects.filter(function (obj) { return obj.id !== objectId; }) });
+}
+function changeObjectPosition(slide, objectId, newPosition) {
+    return __assign(__assign({}, slide), { objects: slide.objects.map(function (obj) {
+            return obj.id === objectId ? __assign(__assign({}, obj), { position: newPosition }) : obj;
+        }) });
+}
+function changeTextContent(slide, textId, newValue) {
+    return __assign(__assign({}, slide), { objects: slide.objects.map(function (obj) {
+            return obj.id === textId && 'value' in obj ? __assign(__assign({}, obj), { value: newValue }) : obj;
+        }) });
+}
+function changeTextSize(slide, textId, newFontSize) {
+    return __assign(__assign({}, slide), { objects: slide.objects.map(function (obj) {
+            return obj.id === textId && 'fontSize' in obj ? __assign(__assign({}, obj), { fontSize: newFontSize }) : obj;
+        }) });
+}
+function changeTextFontFamily(slide, textId, newFontFamily) {
+    return __assign(__assign({}, slide), { objects: slide.objects.map(function (obj) {
+            return obj.id === textId && 'fontFamily' in obj ? __assign(__assign({}, obj), { fontFamily: newFontFamily }) : obj;
+        }) });
+}
+function changeSlideBackground(slide, newBackground) {
+    return __assign(__assign({}, slide), { background: newBackground });
 }

@@ -1,7 +1,6 @@
 function validateString(input: string): boolean {
-    if (validateChars(input) && validateBrackets(input)) {
-        return true;
-    }
+    return validateChars(input) && validateBrackets(input);
+
 }
 
 // ищем корректные символы
@@ -54,15 +53,15 @@ function calc(input: string): number | string {
     const arr = tokenizeString(input);
     const stack: Array<number> = [];
     while (arr.length !== 0) {
-        const token: string = arr.pop();
+        const token: string = arr.pop()!;
         if (!isNaN(Number(token))) {
             stack.push(Number(token));
         } else {
             if (stack.length < 2) {
                 return "Ошибка: недостаточно чисел для выполнения операции";
             }
-            const a = stack.pop();
-            const b = stack.pop();
+            const a = stack.pop()!;
+            const b = stack.pop()!;
 
             switch (token) {
                 case "+":
@@ -86,7 +85,7 @@ function calc(input: string): number | string {
     }
     if (stack.length !== 1) {
         return "Ошибка: некорректное выражение";
-    } else return stack.pop()!;
+    } else return stack.pop()!
 }
 
 console.log("1. 1 - 2 =", calc("- 1 2")); // -1

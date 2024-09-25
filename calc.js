@@ -1,13 +1,11 @@
+"use strict";
 function validateString(input) {
-    if (validateChars(input) && validateBrackets(input)) {
-        return true;
-    }
+    return validateChars(input) && validateBrackets(input);
 }
 // ищем корректные символы
 function validateChars(input) {
-    var validChars = " -?0123456789+*/()";
-    for (var _i = 0, input_1 = input; _i < input_1.length; _i++) {
-        var char = input_1[_i];
+    const validChars = " -?0123456789+*/()";
+    for (const char of input) {
         if (validChars.indexOf(char) === -1) {
             console.log("Некорректный символ в выражении");
             return false;
@@ -17,11 +15,10 @@ function validateChars(input) {
 }
 // проверяем корректность выставленных скобок
 function validateBrackets(input) {
-    var staples = 0;
-    var startBracket = "(";
-    var endBracket = ")";
-    for (var _i = 0, input_2 = input; _i < input_2.length; _i++) {
-        var char = input_2[_i];
+    let staples = 0;
+    const startBracket = "(";
+    const endBracket = ")";
+    for (const char of input) {
         if (staples < 0) {
             console.log("Неправильно поставленные скобки");
             break;
@@ -41,7 +38,7 @@ function validateBrackets(input) {
 }
 // разбиваем на токены в массив выражения
 function tokenizeString(input) {
-    var regex = /-?\d+|[-+*/]/g;
+    const regex = /-?\d+|[-+*/]/g;
     return input.match(regex) || [];
 }
 // вычисляем значение выражения, проверяем корректность
@@ -49,10 +46,10 @@ function calc(input) {
     if (!validateString(input)) {
         return "Ошибка: некорректное выражение или символы";
     }
-    var arr = tokenizeString(input);
-    var stack = [];
+    const arr = tokenizeString(input);
+    const stack = [];
     while (arr.length !== 0) {
-        var token = arr.pop();
+        const token = arr.pop();
         if (!isNaN(Number(token))) {
             stack.push(Number(token));
         }
@@ -60,8 +57,8 @@ function calc(input) {
             if (stack.length < 2) {
                 return "Ошибка: недостаточно чисел для выполнения операции";
             }
-            var a = stack.pop();
-            var b = stack.pop();
+            const a = stack.pop();
+            const b = stack.pop();
             switch (token) {
                 case "+":
                     stack.push(a + b);

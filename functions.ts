@@ -37,6 +37,7 @@ function addTextToSlide(slide: Slide, newText: TextObject): Slide {
         objects: [...slide.objects, newText]
     };
 }
+// методы для создания и изменения
 
 function removeObjectFromSlide(slide: Slide, objectId: string): Slide {
     return {
@@ -58,7 +59,9 @@ function changeTextContent(slide: Slide, textId: string, newValue: string): Slid
     return {
         ...slide,
         objects: slide.objects.map(obj =>
-            obj.id === textId && 'value' in obj ? { ...obj, value: newValue } : obj
+            obj.id === textId && 'value' in obj
+                ? { ...obj, value: newValue }
+                : obj
         )
     };
 }
@@ -71,7 +74,7 @@ function changeTextSize(slide: Slide, textId: string, newFontSize: string): Slid
         )
     };
 }
-
+// проверять тип объекта
 function changeTextFontFamily(slide: Slide, textId: string, newFontFamily: string): Slide {
     return {
         ...slide,
