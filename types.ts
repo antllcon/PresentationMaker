@@ -7,12 +7,35 @@ type Presentation = {
 // Слайд
 type Slide = {
     id: string;
-    objects: SlideObject[];
-    background: Solid | Image | Gradient;
+    objects: CommonObject[];
+    background: Background;
+}
+
+// Фон
+type Background = BackgroundSolid | BackgroundImage | BackgroundGradient;
+
+// Заливка цветом фон
+type BackgroundSolid = {
+    type: 'solid';
+    color: string;
+}
+
+// Изображение фон
+type BackgroundImage = {
+    type: 'image';
+    src: string;
+}
+
+// Градиентный фон
+type BackgroundGradient = {
+    type: 'gradient';
+    colors: { color: string }[];
 }
 
 // Объекты на слайде
-type SlideObject = {
+type SlideObject = TextObject | ImageObject | FigureObject;
+
+type CommonObject = {
     id: string;
     position: {
         x: number;
@@ -27,86 +50,69 @@ type SlideObject = {
 }
 
 // Текстовый объект
-type TextObject = SlideObject & {
+type TextObject = CommonObject & {
+    type: 'text';
     value: string;
+    textColor: string;
+    backgroundColor: BackgroundSolid;
     fontSize: string;
     fontFamily: string;
 }
 
 // Объект изображения
-type ImageObject = SlideObject & {
-    src: string;
-}
+type ImageObject = BackgroundImage & CommonObject;
 
 // Объект фигуры
-type FigureObject = SlideObject & {
-    shape: Rectangle | Circle | Triangle | ArbitraryLine;
-    fillColor: string;
+type FigureObject = CommonObject & {
+    type: 'figure';
+    shape: Shape;
+    backgroundColor: BackgroundSolid;
 }
 
-// Заливка цветом фон
-type Solid = {
-    type: "solid";
-    color: string;
-}
-
-// Изображение фон
-type Image = {
-    type: "image";
-    src: string;
-}
-
-// Градиентный фон
-type Gradient = {
-    type: "gradient";
-    colors: { color: string }[];
-    angle: number;
-}
+// Форма фигуры
+type Shape = Rectangle | Circle | Triangle | ArbitraryLine;
 
 // Прямоугольник
 type Rectangle = {
-    type: "rectangle";
-    width: number;
-    height: number;
+    type: 'rectangle';
 }
 
 // Круг
 type Circle = {
-    type: "circle";
-    radius: number;
+    type: 'circle';
 }
 
 // Треугольник
 type Triangle = {
-    type: "triangle";
+    type: 'triangle';
 }
 
 // Произвольная линия
 type ArbitraryLine = {
-    type: "arbitraryLine";
+    type: 'arbitraryLine';
     points: { x: number; y: number }[];
 }
 
 // Выделенные слайды
-type SelectionSlidesId = {
-    id: string[];
+type SelectedSlides = {
+    selectedId: string[];
+};
+
+// Выделенные объекты
+type SelectedObjects = {
+    selectedId: string[];
 }
 
-// Выделение объектов на слайде
-type SelectionSlideObjectsId = {
-    selectedObjectsId: string[];
-}
-
-export {
+export type {
     Presentation,
     Slide,
     SlideObject,
     TextObject,
-    Solid,
-    Gradient,
-    Image,
+    BackgroundSolid,
+    BackgroundGradient,
+    BackgroundImage,
     ImageObject,
     FigureObject,
-    SelectionSlidesId,
-    SelectionSlideObjectsId
-}
+    SelectedSlides,
+    SelectedObjects
+};
